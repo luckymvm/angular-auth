@@ -7,7 +7,12 @@ export class StorageService {
 
   constructor() { }
 
-  generateBrowserId() {
-    return generateRandomString(7);
+
+  getBrowserId() {
+    return window.localStorage.getItem('browserId');
+  }
+
+  setBrowserId(browserId: string) {
+    return window.localStorage.setItem('browserId', browserId);
   }
 }

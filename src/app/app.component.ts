@@ -1,27 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {generateRandomString} from "./_helpers/generateRandomString";
-import {StorageService} from "./_services/storage.service";
+import {StorageService} from "./_services/storage/storage.service";
+import {AuthService} from "./_services/auth/auth.service";
+import {UserService} from "./_services/user/user.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
-  title = 'angular-auth';
-  constructor(private storage: StorageService) {
-  }
+export class AppComponent implements OnInit {
+  constructor(
+    private auth: AuthService,
+    private user: UserService,
+    private storage: StorageService
+  ) {}
 
   ngOnInit() {
-    const browserId = this.storage.getBrowserId();
-    if (!browserId) {
-      const newBrowserId = this.generateBrowserId();
-      return this.storage.setBrowserId(newBrowserId);
+    if (!this.storage.getBrowserId()) {
+      const browserId = generateRandomString(10);
+      this.storage.setBrowserId(browserId);
     }
-    return;
-  }
 
-  generateBrowserId() {
-    return generateRandomString(10);
+    this.auth.refresh().subscribe({
+      next: (data: any) => {
+        this.auth.status.set('authenticated');
+        this.auth.accessToken.set(data.accessToken);
+        this.user.user.set({username: data.username, email: data.email});
+      },
+      error: (err: any) => {
+        this.auth.status.set('unauthenticated');
+      }
+    }).unsubscribe();
   }
 }

@@ -4,9 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StorageService {
-
   constructor() { }
-
 
   getBrowserId() {
     return window.localStorage.getItem('browserId');

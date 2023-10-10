@@ -1,8 +1,9 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {generateRandomString} from "./_helpers/generateRandomString";
 import {StorageService} from "./_services/storage/storage.service";
 import {AuthService} from "./_services/auth/auth.service";
 import {UserService} from "./_services/user/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ export class AppComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private user: UserService,
-    private storage: StorageService
+    private storage: StorageService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -27,10 +29,14 @@ export class AppComponent implements OnInit {
         this.auth.status.set('authenticated');
         this.auth.accessToken.set(data.accessToken);
         this.user.user.set({username: data.username, email: data.email});
+
+        this.router.navigate(['/dashboard'])
       },
-      error: (err: any) => {
+      error: () => {
         this.auth.status.set('unauthenticated');
+
+        this.router.navigate(['/signin'])
       }
-    }).unsubscribe();
+    });
   }
 }

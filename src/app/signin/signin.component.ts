@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
+import {AuthService} from "../_services/auth/auth.service";
 
 @Component({
   selector: 'app-signin',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent {
+  credentials = {
+    username: '',
+    password: '',
+  }
 
+  authService = inject(AuthService);
 }

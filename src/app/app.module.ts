@@ -16,13 +16,13 @@ import {httpInterceptorProviders} from "./_helpers/http.interceptor";
     AppComponent,
     SigninComponent,
     RegisterComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

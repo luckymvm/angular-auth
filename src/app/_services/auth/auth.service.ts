@@ -1,7 +1,8 @@
 import {computed, Injectable, Signal, signal} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {StorageService} from "../storage/storage.service";
-import {AuthStatus, SignIn, SignUp, User} from "./auth-service.interface";
+import {AuthStatus, SignIn, SignUp} from "./auth-service.interface";
+import {User} from '../user/user.interface';
 import {UserService} from "../user/user.service";
 import {Router} from "@angular/router";
 
@@ -78,7 +79,19 @@ export class AuthService {
 
   public logout() {
     return this.http.post(AUTH_API + 'logout',
-      {}, httpOptions
-    );
+      {}, {...httpOptions, responseType: 'text'}
+    ).subscribe({
+      next: (data: any) => {
+        this.status.set('unauthenticated');
+        this.accessToken.set('');
+        this.user.user.set({} as User);
+
+        this.router.navigate(['/signin']);
+      },
+      error: (err: any) => {
+        console.log(err)
+        this.status.set('unauthenticated');
+      }
+    });
   }
 }

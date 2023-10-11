@@ -1,5 +1,5 @@
 import {Injectable, signal} from '@angular/core';
-import {User} from "../auth/auth-service.interface";
+import {User} from "./user.interface";
 
 @Injectable({
   providedIn: 'root'

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
+import {AuthService} from "../_services/auth/auth.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-
+  authService =  inject(AuthService);
 }

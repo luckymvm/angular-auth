@@ -1,7 +1,7 @@
-<div>
-    <form (ngSubmit)="authService.signin(credentials)">
+<app-form-container type="signin">
+    <form class="form-box" (ngSubmit)="authService.signin(credentials)">
         <input type="text" name="username" placeholder="Username or email" [(ngModel)]="credentials.username">
-        <input type="text" name="password" placeholder="password" [(ngModel)]="credentials.password">
+        <input type="password" name="password" placeholder="Password" [(ngModel)]="credentials.password">
         <button type="submit">Sign in</button>
     </form>
-</div>
+</app-form-container>

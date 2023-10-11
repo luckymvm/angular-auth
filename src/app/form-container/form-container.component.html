@@ -1,0 +1,18 @@
+<div class="form-container">
+    <div class="form-wrapper">
+        <h1 class="form-title">{{title}}</h1>
+
+        <ng-content></ng-content>
+
+        <div class="change-form">
+            <span *ngIf="type == 'signin'">
+                <span>Don't have an account?</span>
+                <a routerLink="/signup">Sign up</a>
+            </span>
+            <span *ngIf="type == 'signup'">
+                <span>Already have an account?</span>
+                <a routerLink="/signin">Log in</a>
+            </span>
+        </div>
+    </div>
+</div>

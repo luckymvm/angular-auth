@@ -1,1 +1,56 @@
-/* You can add global styles to this file, and also import other style files */
+@import "normalize.css";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Tomorrow, Arial, 'sans-serif';
+  background-color: #fff;
+}
+
+.container {
+  height: 100vh;
+  background-color: #F3F3F3;
+}
+
+
+// SignIn and Register
+
+.form-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1.375em;
+}
+
+.form-box input, button {
+  display: inline-block;
+  height: 40px;
+  padding-right: 16px;
+}
+
+.form-box input:focus {
+  outline: 0;
+}
+
+.form-box button {
+  border: 0;
+  color: #fff;
+  background-color: #338eff;
+  border-radius: 5px;
+  cursor: pointer;
+
+  transition: background-color .2s;
+}
+
+.form-box button:hover {
+  background-color: #1d80ff;
+}
+
+.form-box input::placeholder {
+  font-size: 16px;
+  padding-left: 10px;
+}
+
+// -----------------------------
+

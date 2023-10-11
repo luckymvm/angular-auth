@@ -1,1 +1,8 @@
-<p>register works!</p>
+<app-form-container type="signup">
+    <form class="form-box" (ngSubmit)="authService.signup(credentials)">
+        <input type="email" name="email" placeholder="Email" [(ngModel)]="credentials.email">
+        <input type="text" name="username" placeholder="Username" [(ngModel)]="credentials.username">
+        <input type="password" name="password" placeholder="Password" [(ngModel)]="credentials.password">
+        <button type="submit">Sign up</button>
+    </form>
+</app-form-container>

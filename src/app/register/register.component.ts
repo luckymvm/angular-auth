@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
+import {AuthService} from "../_services/auth/auth.service";
 
 @Component({
   selector: 'app-register',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  credentials = {
+    email: '',
+    username: '',
+    password: '',
+  }
+
+  authService = inject(AuthService);
 
 }

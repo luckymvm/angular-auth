@@ -1,7 +1,7 @@
 import {computed, Injectable, Signal, signal} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {StorageService} from "../storage/storage.service";
-import {AuthStatus, SignIn, User} from "./auth-service.interface";
+import {AuthStatus, SignIn, SignUp, User} from "./auth-service.interface";
 import {UserService} from "../user/user.service";
 import {Router} from "@angular/router";
 
@@ -50,9 +50,10 @@ export class AuthService {
     });
   }
 
-  public signup(email: string, username: string, password: string) {
+  public signup(newUser: SignUp) {
+    const browserId = this.storage.getBrowserId();
     return this.http.post(USER_API + 'register',
-      {email, username, password}, httpOptions
+      {...newUser, fingerprint: browserId}, httpOptions
     ).subscribe({
       next: (data: any) => {
         this.successfullyRegistered.set(true);

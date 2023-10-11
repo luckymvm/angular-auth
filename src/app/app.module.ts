@@ -10,6 +10,7 @@ import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import {httpInterceptorProviders} from "./_helpers/http.interceptor";
+import { FormContainerComponent } from './form-container/form-container.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {httpInterceptorProviders} from "./_helpers/http.interceptor";
     SigninComponent,
     RegisterComponent,
     DashboardComponent,
+    FormContainerComponent,
   ],
   imports: [
     BrowserModule,

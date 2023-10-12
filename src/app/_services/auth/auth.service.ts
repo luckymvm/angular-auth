@@ -54,7 +54,7 @@ export class AuthService {
   public signup(newUser: SignUp) {
     const browserId = this.storage.getBrowserId();
     return this.http.post(USER_API + 'register',
-      {...newUser, fingerprint: browserId}, httpOptions
+      {...newUser, alias: 'John', fingerprint: browserId}, httpOptions
     ).subscribe({
       next: (data: any) => {
         this.successfullyRegistered.set(true);

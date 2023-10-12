@@ -7,10 +7,10 @@ import {AuthService} from "../_services/auth/auth.service";
   styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent {
+  authService = inject(AuthService);
+
   credentials = {
     username: '',
     password: '',
   }
-
-  authService = inject(AuthService);
 }

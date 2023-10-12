@@ -9,6 +9,10 @@ body {
   background-color: #fff;
 }
 
+button {
+  cursor: pointer;
+}
+
 .container {
   height: 100vh;
   background-color: #F3F3F3;
@@ -24,9 +28,11 @@ body {
 }
 
 .form-box input, button {
-  display: inline-block;
   height: 40px;
-  padding-right: 16px;
+}
+
+.form-box input {
+  padding-left: 15px;
 }
 
 .form-box input:focus {
@@ -47,10 +53,13 @@ body {
   background-color: #1d80ff;
 }
 
-.form-box input::placeholder {
-  font-size: 16px;
-  padding-left: 10px;
+.form-box button:disabled {
+  background-color: #7492ff;
+  cursor: not-allowed;
 }
 
+.field-error {
+  color: red;
+}
 // -----------------------------
 

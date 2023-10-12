@@ -1,8 +1,18 @@
 <app-form-container type="signup">
-    <form class="form-box" (ngSubmit)="authService.signup(credentials)">
-        <input type="email" name="email" placeholder="Email" [(ngModel)]="credentials.email">
-        <input type="text" name="username" placeholder="Username" [(ngModel)]="credentials.username">
-        <input type="password" name="password" placeholder="Password" [(ngModel)]="credentials.password">
-        <button type="submit">Sign up</button>
+    <form class="form-box" (ngSubmit)="authService.signup(credentials)" #form="ngForm">
+        <input type="email" name="email" placeholder="Email" [(ngModel)]="credentials.email"
+               required email #email="ngModel">
+        <span *ngIf="email.invalid && !email.untouched" class="field-error">Not a valid email.</span>
+        <input type="text" name="username" placeholder="Username" [(ngModel)]="credentials.username"
+               required minlength="3" #username="ngModel">
+        <span *ngIf="username.invalid && !username.untouched" class="field-error">
+            The username must contain at least 3 characters.
+        </span>
+        <input type="password" name="password" placeholder="Password" [(ngModel)]="credentials.password"
+               required minlength="8" #password="ngModel">
+        <span *ngIf="password.invalid && !password.untouched" class="field-error">
+            The password must contain at least 8 characters.
+        </span>
+        <button type="submit" [disabled]="authService.isAuthenticating() || !form.valid">Sign up</button>
     </form>
 </app-form-container>

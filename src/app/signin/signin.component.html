@@ -2,10 +2,12 @@
     <form class="form-box" (ngSubmit)="authService.signin(credentials)" #form="ngForm">
         <input type="text" name="username" placeholder="Username or email" [(ngModel)]="credentials.username"
                required #username="ngModel">
-        <span *ngIf="username.invalid && !username.untouched" class="field-error">Username cannot be empty.</span>
+        <span *ngIf="username.invalid && !username.untouched" class="field-error">The username cannot be empty.</span>
         <input type="password" name="password" placeholder="Password" [(ngModel)]="credentials.password"
                required #password="ngModel">
-        <span *ngIf="password.invalid && !password.untouched" class="field-error">Password cannot be empty.</span>
+        <span *ngIf="password.invalid && !password.untouched" class="field-error">The password cannot be empty.</span>
+
+        <span *ngIf="authService.errors().logIn" class="bad-request">{{authService.errors().logIn}}</span>
         <button type="submit" [disabled]="authService.isAuthenticating() || !form.valid">Sign in</button>
     </form>
 </app-form-container>

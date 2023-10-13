@@ -1,17 +1,17 @@
 import {computed, Injectable, Signal, signal} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Router} from "@angular/router";
 import {StorageService} from "../storage/storage.service";
 import {AuthStatus, SignIn, SignUp} from "./auth-service.interface";
 import {User} from '../user/user.interface';
 import {UserService} from "../user/user.service";
-import {Router} from "@angular/router";
 
 const AUTH_API: string = 'http://localhost:3000/auth/';
 const USER_API: string = 'http://localhost:3000/user/';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   withCredentials: true,
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 
 @Injectable({
@@ -20,7 +20,7 @@ const httpOptions = {
 export class AuthService {
   public status = signal<AuthStatus>('idle');
   public accessToken = signal<string>('');
-  public errors = signal({errorMessage: ''});
+  public errors = signal({logIn: '', register: ''});
   public successfullyRegistered = signal<boolean>(false);
 
   readonly isAuthenticated: Signal<boolean> = computed(() => this.status() === 'authenticated');
@@ -29,30 +29,35 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private storage: StorageService,
-    private user: UserService,
+    private userService: UserService,
     private router: Router
   ) {}
 
   public signin(credentials: SignIn) {
     const browserId = this.storage.getBrowserId();
+
+    this.status.set('idle');
     return this.http.post(AUTH_API + 'login',
       {...credentials, fingerprint: browserId}, httpOptions
     ).subscribe({
       next: (data: any) => {
         this.status.set('authenticated');
         this.accessToken.set(data.accessToken);
-        this.user.user.set({username: data.username, email: data.email});
+        this.userService.user.set({username: data.username, email: data.email});
 
         this.router.navigate(['/dashboard']);
       },
-      error: () => {
+      error: (err: any) => {
         this.status.set('unauthenticated');
+        this.errors.mutate(value => value.logIn = err.error.message);
       }
     });
   }
 
   public signup(newUser: SignUp) {
     const browserId = this.storage.getBrowserId();
+
+    this.status.set('idle');
     return this.http.post(USER_API + 'register',
       {...newUser, alias: 'John', fingerprint: browserId}, httpOptions
     ).subscribe({
@@ -60,11 +65,12 @@ export class AuthService {
         this.successfullyRegistered.set(true);
         this.status.set('authenticated');
         this.accessToken.set(data.accessToken);
-        this.user.user.set({username: data.username, email: data.email});
+        this.userService.user.set({username: data.username, email: data.email});
 
         this.router.navigate(['/dashboard']);
       },
-      error: () => {
+      error: (err: any) => {
+        this.errors.mutate(value => value.register = err.error.message);
         this.status.set('unauthenticated');
       }
     });
@@ -81,15 +87,14 @@ export class AuthService {
     return this.http.post(AUTH_API + 'logout',
       {}, {...httpOptions, responseType: 'text'}
     ).subscribe({
-      next: (data: any) => {
+      next: () => {
         this.status.set('unauthenticated');
         this.accessToken.set('');
-        this.user.user.set({} as User);
+        this.userService.user.set({} as User);
 
         this.router.navigate(['/signin']);
       },
-      error: (err: any) => {
-        console.log(err)
+      error: () => {
         this.status.set('unauthenticated');
       }
     });

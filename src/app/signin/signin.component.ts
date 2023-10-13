@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnDestroy} from '@angular/core';
 import {AuthService} from "../_services/auth/auth.service";
 
 @Component({
@@ -6,11 +6,15 @@ import {AuthService} from "../_services/auth/auth.service";
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss']
 })
-export class SigninComponent {
+export class SigninComponent implements OnDestroy {
   authService = inject(AuthService);
 
   credentials = {
     username: '',
     password: '',
+  }
+
+  ngOnDestroy() {
+    this.authService.errors.mutate(value => value.logIn = '');
   }
 }

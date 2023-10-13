@@ -13,6 +13,8 @@
         <span *ngIf="password.invalid && !password.untouched" class="field-error">
             The password must contain at least 8 characters.
         </span>
+
+        <span *ngIf="authService.errors().register" class="bad-request">{{authService.errors().register}}</span>
         <button type="submit" [disabled]="authService.isAuthenticating() || !form.valid">Sign up</button>
     </form>
 </app-form-container>

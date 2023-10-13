@@ -83,6 +83,20 @@ export class AuthService {
     );
   }
 
+  public getUserData() {
+    return this.http.get(AUTH_API, httpOptions).subscribe({
+      next: (data: any) => {
+        this.userService.user.set(data as User);
+      },
+      error: (err) => {
+        console.log(err)
+        this.status.set('unauthenticated');
+        this.userService.user.set({} as User);
+        this.accessToken.set('');
+      }
+    });
+  }
+
   public logout() {
     return this.http.post(AUTH_API + 'logout',
       {}, {...httpOptions, responseType: 'text'}

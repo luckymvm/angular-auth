@@ -1,2 +1,8 @@
-<p>dashboard works!</p>
-<button type="button" (click)="authService.logout()">logout</button>
+<div class="dashboard-container">
+    <div class="dashboard-wrapper">
+        <header>
+            <p>Hello @{{userService.user().username}}!</p>
+            <button type="button" (click)="authService.logout()">Logout</button>
+        </header>
+    </div>
+</div>

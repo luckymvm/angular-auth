@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
       next: (data: any) => {
         this.authService.status.set('authenticated');
         this.authService.accessToken.set(data.accessToken);
-        this.userService.user.set({username: data.username, email: data.email});
+        this.authService.getUserData();
       },
       error: () => {
         this.authService.status.set('unauthenticated');

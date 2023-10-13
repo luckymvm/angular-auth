@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: 'dashboard', component:  DashboardComponent, canMatch: [authGuard('protected')]},
   {path: 'signin', component: SigninComponent, canMatch: [authGuard('unprotected')]},
   {path: 'signup', component:  RegisterComponent, canMatch: [authGuard('unprotected')]},
-  {path: '**', component:  AppComponent},
+  {path: '**', redirectTo: 'dashboard'},
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
-import {CanActivateFn, CanMatchFn, Router} from '@angular/router';
+import {CanMatchFn, Router} from '@angular/router';
 import {inject} from "@angular/core";
 import {AuthService} from "./auth.service";
 import {toObservable} from "@angular/core/rxjs-interop";
@@ -12,9 +12,11 @@ export const authGuard = (type: 'protected' | 'unprotected'): CanMatchFn => {
         return toObservable(auth.isAuthenticated).pipe(
             filter(() => !auth.isAuthenticating()),
             map((isAuthenticated) => {
-                if ((type === 'unprotected' && !isAuthenticated) || (type === 'protected' && isAuthenticated))
+                if ((type === 'unprotected' && !isAuthenticated) || (type === 'protected' && isAuthenticated)) {
                     return true;
-                return router.parseUrl('/signin');
+                }
+
+                return false;
             })
         );
     }

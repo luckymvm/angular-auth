@@ -58,8 +58,14 @@ button {
   cursor: not-allowed;
 }
 
-.field-error {
+.field-error, .bad-request {
   color: red;
+  font-size: 15px;
 }
+
+.bad-request {
+  text-align: center;
+}
+
 // -----------------------------
 

@@ -12,8 +12,8 @@ import {Router} from "@angular/router";
 })
 export class AppComponent implements OnInit {
   constructor(
-    private auth: AuthService,
-    private user: UserService,
+    private authService: AuthService,
+    private userService: UserService,
     private storage: StorageService,
     private router: Router,
   ) {}
@@ -24,17 +24,14 @@ export class AppComponent implements OnInit {
       this.storage.setBrowserId(browserId);
     }
 
-    this.auth.refresh().subscribe({
+    this.authService.refresh().subscribe({
       next: (data: any) => {
-        this.auth.status.set('authenticated');
-        this.auth.accessToken.set(data.accessToken);
-        this.user.user.set({username: data.username, email: data.email});
-
-        this.router.navigate(['/dashboard'])
+        this.authService.status.set('authenticated');
+        this.authService.accessToken.set(data.accessToken);
+        this.userService.user.set({username: data.username, email: data.email});
       },
       error: () => {
-        this.auth.status.set('unauthenticated');
-
+        this.authService.status.set('unauthenticated');
         this.router.navigate(['/signin'])
       }
     });

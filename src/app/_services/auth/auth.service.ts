@@ -88,8 +88,7 @@ export class AuthService {
       next: (data: any) => {
         this.userService.user.set(data as User);
       },
-      error: (err) => {
-        console.log(err)
+      error: () => {
         this.status.set('unauthenticated');
         this.userService.user.set({} as User);
         this.accessToken.set('');
